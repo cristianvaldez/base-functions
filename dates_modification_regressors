@@ -1,0 +1,16 @@
+#in your data set, the date_field must be a string in order the function to work
+
+dates_mod <- function(data,date_field){
+    require(tidyverse)
+    require(lubridate)
+    rename_2_date <- function(x){return("date")}
+    data <- data %>%
+      dplyr::rename_at(date_field,rename_2_date) %>%
+      dplyr::mutate(date = lubridate::date(date)) %>%
+      dplyr::mutate(yr = lubridate::year(date),
+                    mt = lubridate::month(date, label = T),
+                    dw = lubridate::wday(date,label = T,week_start = getOption("lubridate.week.start", 1)),
+                    dn = lubridate::day(date),
+                    ps = ifelse(dn %in% c(1,2,3,28,29,30,31,13,14,15,16,17),1,0))
+    return(data)
+  }
