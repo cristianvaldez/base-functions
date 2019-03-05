@@ -1,0 +1,11 @@
+#functions used to get percentiles done with no errors
+
+sd_dirac <- function(x){
+    y <- ifelse(is.na(sd(x,na.rm = TRUE)),0,sd(x,na.rm = TRUE))
+    return(y)
+  }
+  
+  invnorm <- function(p,m,sd){
+    x <- ifelse(sd==0 | is.na(sd),m,qnorm(p = p,mean = m,sd = sd))
+    return(x)
+  }
